@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+Dir["#{File.dirname(__FILE__)}/lib/**/*.rb"].each {|file| require file }
+
+options = {}
+option_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: kmlbo kmlfile outputfile"
+end
+
+option_parser.parse!
+
+kml_file = ARGV[0]
+output_file = ARGV[1]
+
+if (kml_file == nil || output_file == nil)
+  puts "Missing required argument."
+  puts  option_parser.banner
+  exit 1
+end
+
+coordinates_array = KML.new(kml_file).to_a
+File.open(output_file, "w+") do |file|
+  file.write("PATH_COORDINATES = #{coordinates_array.to_s}")
+end
