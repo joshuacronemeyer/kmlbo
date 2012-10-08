@@ -12,6 +12,10 @@ class KML
     @coordinates
   end
   
+  def simplify!
+    @coordinates = PointList.new(@coordinates).simplify.tuple_array
+  end
+  
   private
   def parse_coordinates
     coordinate_string = get_data_between_coordinates_markup

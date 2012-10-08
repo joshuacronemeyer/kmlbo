@@ -5,7 +5,11 @@ Dir["#{File.dirname(__FILE__)}/lib/**/*.rb"].each {|file| require file }
 
 options = {}
 option_parser = OptionParser.new do |opts|
-  opts.banner = "Usage: kmlbo kmlfile outputfile"
+  opts.banner = "Usage: kmlbo [options] kmlfile outputfile"
+  opts.on("-s", "--simplify [EPSILON]", "Simplify the path using the Douglas Peucker algorithm (optionally using EPSILON to control magnitude of simplification)") do |s|
+      options[:simplify] = true
+      options[:epsilon] = s.to_f
+    end
 end
 
 option_parser.parse!
@@ -19,7 +23,12 @@ if (kml_file == nil || output_file == nil)
   exit 1
 end
 
-coordinates_array = KML.new(kml_file).to_a
+if options[:simplify]
+  coordinates_array = KML.new(kml_file).simplify!.to_a
+else
+  coordinates_array = KML.new(kml_file).to_a
+end
+
 File.open(output_file, "w+") do |file|
   file.write("PATH_COORDINATES = #{coordinates_array.to_s}")
 end
