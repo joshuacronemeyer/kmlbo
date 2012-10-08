@@ -12,8 +12,12 @@ class KML
     @coordinates
   end
   
-  def simplify!
-    @coordinates = PointList.new(@coordinates).simplify.tuple_array
+  def simplify!(epsilon=nil)
+    if epsilon
+      @coordinates = PointList.new(@coordinates).simplify(epsilon).tuple_array
+    else
+      @coordinates = PointList.new(@coordinates).simplify.tuple_array
+    end
   end
   
   private
