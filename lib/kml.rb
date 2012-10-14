@@ -1,3 +1,5 @@
+require 'erb'
+
 class KML
   def initialize(kml_file)
     @coordinates = []
@@ -13,11 +15,24 @@ class KML
   end
   
   def simplify!(epsilon=nil)
+    original_number_of_coords = @coordinates.size
     if epsilon
       @coordinates = PointList.new(@coordinates).simplify(epsilon).tuple_array
     else
       @coordinates = PointList.new(@coordinates).simplify.tuple_array
     end
+    puts "Simplified path from #{original_number_of_coords} to #{@coordinates.size} points"
+    self
+  end
+  
+  def to_kml
+    kml = "No Result."
+    File.open("template.kml.erb", "r") do |file|
+      mapname = "The Oregon Twail"
+      template = ERB.new file.read
+      kml = template.result(binding)
+    end
+    kml
   end
   
   private

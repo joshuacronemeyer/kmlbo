@@ -6,7 +6,7 @@ class PointList
     @tuple_array = tuple_array
   end
   
-  def simplify(epsilon=0.01)
+  def simplify(epsilon=0.000001)
     return PointList.new(douglas_peucker(@tuple_array, epsilon))
   end
   
@@ -40,16 +40,16 @@ class PointList
     return distance
   end
   
-  def dist2(v,w)
+  def magnitude(v,w)
     (w[0] - v[0])**2 + (w[1] - v[1])**2
   end
   
-  def dist_to_segment_squared(p,v,w)
-    l2 = dist2(v, w)
-    return dist2(p, v) if l2 == 0
-    t = ((p[0] - v[0]) * (w[0] - v[0]) + (p[1] - v[1]) * (w[1] - v[1])) / l2;
-    return dist2(p, v) if t < 0
-    return dist2(p, w) if t > 1
-    return dist2(p, [v[0] + t * (w[0] - v[0]), v[1] + t * (w[1] - v[1])]);
+  def dist_to_segment_squared(point,seg_start,seg_end)
+    l2 = magnitude(seg_start, seg_end)
+    return magnitude(point, seg_start) if l2 == 0
+    t = ((point[0] - seg_start[0]) * (seg_end[0] - seg_start[0]) + (point[1] - seg_start[1]) * (seg_end[1] - seg_start[1])) / l2;
+    return magnitude(point, seg_start) if t < 0
+    return magnitude(point, seg_end) if t > 1
+    return magnitude(point, [seg_start[0] + t * (seg_end[0] - seg_start[0]), seg_start[1] + t * (seg_end[1] - seg_start[1])]);
   end
 end

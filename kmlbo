@@ -7,9 +7,12 @@ options = {}
 option_parser = OptionParser.new do |opts|
   opts.banner = "Usage: kmlbo [options] kmlfile outputfile"
   opts.on("-s", "--simplify [EPSILON]", "Simplify the path using the Douglas Peucker algorithm (optionally using EPSILON as simplification factor)") do |s|
-      options[:simplify] = true
-      options[:epsilon] = s.to_f if s
-    end
+    options[:simplify] = true
+    options[:epsilon] = s.to_f if s
+  end
+  opts.on("-k", "--kml", "Emit kml instead of ruby") do |k|
+    options[:kml] = true
+  end
 end
 
 option_parser.parse!
@@ -24,11 +27,17 @@ if (kml_file == nil || output_file == nil)
 end
 
 if options[:simplify]
-  coordinates_array = KML.new(kml_file).simplify!(options[:epsilon]).to_a
+  coordinates = KML.new(kml_file).simplify!(options[:epsilon])
 else
-  coordinates_array = KML.new(kml_file).to_a
+  coordinates = KML.new(kml_file)
 end
 
-File.open(output_file, "w+") do |file|
-  file.write("PATH_COORDINATES = #{coordinates_array.to_s}")
+if options[:kml]
+  File.open(output_file, "w+") do |file|
+    file.write(coordinates.to_kml)
+  end
+else
+  File.open(output_file, "w+") do |file|
+    file.write("PATH_COORDINATES = #{coordinates.to_a.to_s}")
+  end
 end
