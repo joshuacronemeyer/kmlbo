@@ -4,6 +4,7 @@ kml-bo
 Utility for working with kml files including douglas peucker path simplification and export to ruby array.
 
 Examples:
+
 Parse KML file and output all coordinates to a ruby array in a file called simple.rb
 
     ./kmlbo sample.kml simple.rb
