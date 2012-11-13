@@ -1,13 +1,17 @@
 class PointList
   
   attr_accessor :tuple_array
-  
-  def initialize(tuple_array)
+  attr_accessor :epsilon
+  attr_accessor :passes
+  def initialize(tuple_array, epsilon=nil, passes=nil)
     @tuple_array = tuple_array
+    @epsilon = epsilon || 0.000001
+    @passes = passes || 1
   end
   
-  def simplify(epsilon=0.000001)
-    return PointList.new(douglas_peucker(@tuple_array, epsilon))
+  def simplify
+    @passes.times{@tuple_array = douglas_peucker(@tuple_array, @epsilon)}
+    return PointList.new(@tuple_array)
   end
   
   def ==(other)
