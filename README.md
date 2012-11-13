@@ -5,7 +5,7 @@ A Gem for converting kml path data to ruby arrays, and applying douglas peucker 
 
 Features:
 
-1. Simplify a path using the [Douglas Peucker algorithm | http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm]. 
+1. Simplify a path using the [Douglas Peucker algorithm](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm). 
 2. Apply Douglas Peucker multiple times on the same path, allowing you to compress a line arbitrarily.
 3. Output as KML or a ruby array.
 4. KML files are readable by Google Earth.
