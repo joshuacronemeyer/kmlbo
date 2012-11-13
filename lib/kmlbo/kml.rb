@@ -23,7 +23,7 @@ class KML
   
   def to_kml
     kml = "No Result."
-    File.open("lib/template.kml.erb", "r") do |file|
+    File.open("lib/kmlbo/output.kml.erb", "r") do |file|
       mapname = "The Oregon Twail"
       template = ERB.new file.read
       kml = template.result(binding)
