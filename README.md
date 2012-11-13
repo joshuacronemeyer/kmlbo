@@ -12,7 +12,7 @@ Features:
 
 ##Installation
     gem install kmlbo
-    
+
 ##Usage Examples
   Parse KML file. Simplify with 5 passes of douglas peucker.
 
