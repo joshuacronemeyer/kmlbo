@@ -1,6 +1,7 @@
 require 'minitest/autorun'
-require_relative '../lib/kmlbo/pointlist.rb'
-require_relative 'data.rb'
+require 'kmlbo'
+require 'data'
+
 class PointlistTest < MiniTest::Unit::TestCase
   describe "simplify module" do
     it "must do nothing when asked to simplify a one point path" do

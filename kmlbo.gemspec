@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name        = 'kmlbo'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.date        = '2012-11-13'
-  s.summary     = "A Gem for converting kml path data to ruby arrays, and applying douglas peucker path simplification."
+  s.summary     = "A library and utility for working with KML, Ruby and the Google Maps API."
   s.description = "A Gem for converting kml path data to ruby arrays, and applying douglas peucker path simplification."
   s.author      = "Josh Cronemeyer"
   s.email       = 'joshuacronemeyer@gmail.com'
@@ -12,13 +12,16 @@ Gem::Specification.new do |s|
     "Rakefile",
     "README.md",
     "bin/kmlbo",
+    "lib/kmlbo.rb",
     "lib/kmlbo/kml.rb",
-    "lib/kmlbo/output.kml.erb",
+    "lib/kmlbo/g_polyline.rb",
     "lib/kmlbo/pointlist.rb",
+    "lib/kmlbo/output.kml.erb"
   ]
   s.test_files = [
     "test/data.rb",
     "test/pointlist_test.rb",
+    "test/g_polyline_test.rb",
     "test/sample.kml"
   ]
   s.executables = ['kmlbo']

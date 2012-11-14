@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 require 'optparse'
-require 'kmlbo/kml'
-require 'kmlbo/pointlist'
+require 'kmlbo'
 
 options = {}
 option_parser = OptionParser.new do |opts|
@@ -15,6 +14,9 @@ option_parser = OptionParser.new do |opts|
   end
   opts.on("-k", "--kml", "Emit kml instead of ruby") do |kml|
     options[:kml] = true
+  end
+  opts.on("-e", "--encoded", "Output an encoded path suitable for use in Google Maps v3 API") do |encoded|
+    options[:encoded] = true
   end
 end
 
@@ -38,6 +40,10 @@ end
 if options[:kml]
   File.open(output_file, "w+") do |file|
     file.write(coordinates.to_kml)
+  end
+elsif options[:encoded]
+  File.open(output_file, "w+") do |file|
+    file.write(coordinates.to_encoded)
   end
 else
   File.open(output_file, "w+") do |file|

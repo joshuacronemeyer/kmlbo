@@ -2,8 +2,8 @@ require 'erb'
 
 class KML
   def initialize(kml_file)
-    @coordinates = []
     @file_data = ""
+    @point_list = PointList.new([])
     File.open(kml_file, "r") do |file|
       @file_data = file.read
       parse_coordinates
@@ -11,13 +11,17 @@ class KML
   end
   
   def to_a
-    @coordinates
+    @point_list.tuple_array
+  end
+  
+  def to_encoded
+    @point_list.to_s
   end
   
   def simplify!(epsilon=nil, passes=nil)
-    original_number_of_coords = @coordinates.size
-    @coordinates = PointList.new(@coordinates, epsilon, passes).simplify.tuple_array
-    puts "Simplified path from #{original_number_of_coords} to #{@coordinates.size} points"
+    original_number_of_coords = @point_list.size
+    @point_list = PointList.new(@point_list.tuple_array, epsilon, passes).simplify
+    puts "Simplified path from #{original_number_of_coords} to #{@point_list.size} points"
     self
   end
   
@@ -34,7 +38,10 @@ class KML
   private
   def parse_coordinates
     coordinate_string = get_data_between_coordinates_markup
-    @coordinates = convert_string_data_to_array_data(coordinate_string) if coordinate_string != ""
+    if coordinate_string != ""
+      array_data = convert_string_data_to_array_data(coordinate_string) 
+      @point_list = PointList.new(array_data)
+    end
   end
   
   def get_data_between_coordinates_markup

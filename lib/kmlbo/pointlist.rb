@@ -1,5 +1,5 @@
 class PointList
-  
+  include GPolyline
   attr_accessor :tuple_array
   attr_accessor :epsilon
   attr_accessor :passes
@@ -20,6 +20,9 @@ class PointList
     @tuple_array == other.tuple_array
   end
   
+  def size
+    @tuple_array.size
+  end
   private
   def douglas_peucker(point_list, epsilon)
     #http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
