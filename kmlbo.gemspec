@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
     "test/pointlist_test.rb",
     "test/g_polyline_test.rb",
     "test/sample.kml"
+    "test/test_helper.rb"
   ]
   s.executables = ['kmlbo']
   s.add_development_dependency('rake')
