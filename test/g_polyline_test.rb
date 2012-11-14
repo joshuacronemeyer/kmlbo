@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'kmlbo'
-
+require File.join(File.dirname(__FILE__), 'test_helper')
 # all expected values for these tests were computed using google's API
 # https://developers.google.com/maps/documentation/utilities/polylineutility
 class GPolylineTest < MiniTest::Unit::TestCase

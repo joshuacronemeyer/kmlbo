@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'kmlbo'
-require 'data'
+require File.join(File.dirname(__FILE__), 'test_helper')
 
 class PointlistTest < MiniTest::Unit::TestCase
   describe "simplify module" do
