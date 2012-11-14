@@ -43,7 +43,7 @@ if options[:kml]
   end
 elsif options[:encoded]
   File.open(output_file, "w+") do |file|
-    file.write(coordinates.to_encoded)
+    file.write(coordinates.to_encoded.inspect)
   end
 else
   File.open(output_file, "w+") do |file|
