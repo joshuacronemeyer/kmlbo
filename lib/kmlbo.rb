@@ -5,5 +5,6 @@
 # Copyright:: Copyright (c) 2008-2011
 # License:: MIT License (http://www.opensource.org/licenses/mit-license.php)
 require 'kmlbo/g_polyline.rb'
+require 'kmlbo/g_polyline_builder.rb'
 require 'kmlbo/pointlist'
 require 'kmlbo/kml'

@@ -1,7 +1,8 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class PointlistTest < MiniTest::Unit::TestCase
-  describe "simplify module" do
+  describe "simplify" do
+
     it "must do nothing when asked to simplify a one point path" do
       pointlist = PointList.new([[-122.674693498207,45.5474112205939,0]])
       pointlist.simplify.must_equal pointlist
@@ -50,6 +51,17 @@ class PointlistTest < MiniTest::Unit::TestCase
       simplified = pointlist.simplify
       assert(simplified.tuple_array.length > 0)
       assert(simplified.tuple_array.length < Data::PATH.length)
-    end
+    end    
+  
   end
+  
+  describe "size" do
+    
+    it "should know the size of the list" do
+      pointlist = PointList.new([[0,0,0], [1,1,0], [2,2,0], [3,1,0], [4,0,0]])
+      assert_equal(5, pointlist.size)
+    end
+    
+  end
+  
 end

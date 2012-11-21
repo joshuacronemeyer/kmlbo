@@ -31,48 +31,56 @@
 module GPolyline
   # Output an encoded path String suitable for use in Google Maps v3 API
   def to_s
-    encode_polyline_algorithm
+    Encoder.new(gpolyline_points).do
   end
   
-  private
-  def encode_polyline_algorithm
-    deltas.map {|point| encode_signed_decimal(point) }.join
-  end
-  
-  def round_decimal(decimal)
-    (decimal * 1e5).round
-  end
-  
-  def encode_signed_decimal(num)
-    sgn_num = num << 1
-    sgn_num = ~sgn_num if num < 0 
-    return encode_number(sgn_num)
-  end
+  class Encoder
+    
+    def initialize(points)
+      @points = points
+    end
+    
+    def do
+      deltas.map {|point| encode_signed_decimal(point) }.join
+    end
 
-  def to_e5
-    @tuple_array.map do |tuple|
-      tuple.map{|coordinate| round_decimal(coordinate)}
+    def round_decimal(decimal)
+      (decimal * 1e5).round
     end
-  end
-  
-  def deltas
-    delta_latitude, delta_longitude = 0, 0
 
-    return to_e5.inject([]) do |polyline, (longitude, latitude)|
-      polyline << latitude - delta_latitude
-      polyline << longitude - delta_longitude
-      delta_latitude, delta_longitude = latitude, longitude
-      polyline
+    def encode_signed_decimal(num)
+      sgn_num = num << 1
+      sgn_num = ~sgn_num if num < 0 
+      return encode_number(sgn_num)
+    end
+
+    def to_e5
+      @points.map do |tuple|
+        tuple.map{|coordinate| round_decimal(coordinate)}
+      end
+    end
+
+    def deltas
+      delta_latitude, delta_longitude = 0, 0
+
+      return to_e5.inject([]) do |polyline, (longitude, latitude)|
+        polyline << latitude - delta_latitude
+        polyline << longitude - delta_longitude
+        delta_latitude, delta_longitude = latitude, longitude
+        p "#{latitude}, #{longitude}, #{delta_latitude}, #{delta_longitude}, #{polyline}"
+        polyline
+      end
+    end
+
+    def encode_number(num)
+      encoded = ""
+      while (num >= 0x20) do
+          encoded << ((0x20 | (num & 0x1f)) + 63).chr
+          num = num >> 5
+      end
+      encoded << (num + 63).chr
+      return encoded
     end
   end
   
-  def encode_number(num)
-    encoded = ""
-    while (num >= 0x20) do
-        encoded << ((0x20 | (num & 0x1f)) + 63).chr
-        num = num >> 5
-    end
-    encoded << (num + 63).chr
-    return encoded
-  end
 end

@@ -23,6 +23,11 @@ class PointList
   def size
     @tuple_array.size
   end
+  
+  def gpolyline_points
+    @tuple_array
+  end
+  
   private
   def douglas_peucker(point_list, epsilon)
     #http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
