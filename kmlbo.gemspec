@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'kmlbo'
-  s.version     = '0.0.2'
+  s.version     = '0.0.3'
   s.date        = '2012-11-13'
   s.summary     = "A library and utility for working with KML, Ruby and the Google Maps API."
   s.description = "A Gem for converting kml path data to ruby arrays, and applying douglas peucker path simplification."
