@@ -36,7 +36,7 @@
     <LineString>
       <tessellate>1</tessellate>
       <coordinates>
-        <%  @coordinates.each do |point| %>
+        <%  @point_list.tuple_array.each do |point| %>
           <%= point[0] %>,<%= point[1] %>,<%= point[2] %>
         <%  end %>
       </coordinates>
